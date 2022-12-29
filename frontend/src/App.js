@@ -5,7 +5,7 @@ import ChatPage from './Pages/ChatPage';
 
 function App() {
   return (
-    <div className='App'>
+    <div className='App bg-slate-900 min-h-screen'>
       <Route path='/' component={HomePage} exact></Route>
       <Route path='/chats' component={ChatPage}></Route>
     </div>
