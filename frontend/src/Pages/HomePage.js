@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-import Signup from '../components/Authentication/Signup';
+import Registration from '../components/Authentication/Registration';
 import Login from '../components/Authentication/Login';
 
 const HomePage = () => {
   const [render, setRender] = useState(Login);
   const selectedCSS =
-    'inline-block w-2/4 px-4 py-4 mr-2 text-lg text-center text-blue-500 border border-white rounded-md cursor-pointer font-mdiium font-lg bg-slate-800';
+    'inline-block w-2/4 px-4 py-4 mr-2 text-lg shadow shadow-slate-400 text-center text-blue-500 border border-white rounded-md cursor-pointer font-medium font-lg bg-slate-800';
   const nonSelectedCSS =
-    'inline-block w-2/4 px-4 py-4 mr-2 text-lg text-center text-white rounded-md cursor-pointer bg-slate-800';
+    'inline-block w-2/4 px-4 py-4 mr-2 text-lg text-center text-white font-medium rounded-md cursor-pointer bg-slate-800';
 
   const [regTab, setRegTab] = useState({
     name: 'registration',
@@ -31,7 +32,7 @@ const HomePage = () => {
           selected: true,
           css: selectedCSS,
         });
-        setRender(Signup);
+        setRender(Registration);
         setLoginTab({
           name: 'login',
           selected: false,
@@ -59,11 +60,14 @@ const HomePage = () => {
     <div>
       <div className='container pt-20 pl-3 pr-3 mx-auto'>
         <div className='container box-border max-w-xs mx-auto border-2 border-white rounded-md shadow-lg shadow-slate-400/75'>
-          <div className='flex flex-row justify-center text-center text-white bg-blue-800 rounded-md font-Lucky'>
+          <Link
+            to='/'
+            className='flex flex-row justify-center text-center text-white bg-blue-800 rounded-md font-Lucky'
+          >
             <div className='my-6 text-5xl'>G</div>
             <div className='my-6 text-5xl animate-pulse'>_</div>
             <div className='my-6 text-5xl'>Chat</div>
-          </div>
+          </Link>
         </div>
         <div className='container max-w-6xl pt-10 mx-auto font-Prompt'>
           <ul className='flex flex-row'>

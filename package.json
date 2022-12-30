@@ -11,6 +11,7 @@
   "author": "Antonio Gallardo Girela",
   "license": "ISC",
   "dependencies": {
+    "@heroicons/react": "^2.0.13",
     "concurrently": "^7.6.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
