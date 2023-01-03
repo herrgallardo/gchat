@@ -1,60 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Tab } from '@headlessui/react';
 
-import Registration from '../components/Authentication/Registration';
-import Login from '../components/Authentication/Login';
+import Registration from '../components/authentication/Registration';
+import Login from '../components/authentication/Login';
 
 const HomePage = () => {
-  const [render, setRender] = useState(Login);
-  const selectedCSS =
-    'inline-block w-2/4 px-4 py-4 mr-2 text-lg shadow shadow-slate-400 text-center text-blue-500 border border-white rounded-md cursor-pointer font-medium font-lg bg-slate-800';
-  const nonSelectedCSS =
-    'inline-block w-2/4 px-4 py-4 mr-2 text-lg text-center text-white font-medium rounded-md cursor-pointer bg-slate-800';
-
-  const [regTab, setRegTab] = useState({
-    name: 'registration',
-    selected: false,
-    css: nonSelectedCSS,
-  });
-
-  const [loginTab, setLoginTab] = useState({
-    name: 'login',
-    selected: true,
-    css: selectedCSS,
-  });
-
-  const clickHandler = (event) => {
-    const tabName = event.currentTarget.id;
-    if (tabName === 'registration') {
-      if (!regTab.selected) {
-        setRegTab({
-          name: 'registration',
-          selected: true,
-          css: selectedCSS,
-        });
-        setRender(Registration);
-        setLoginTab({
-          name: 'login',
-          selected: false,
-          css: nonSelectedCSS,
-        });
-      }
-    } else if (tabName === 'login') {
-      if (!loginTab.selected) {
-        setLoginTab({
-          name: 'login',
-          selected: true,
-          css: selectedCSS,
-        });
-        setRender(Login);
-        setRegTab({
-          name: 'registration',
-          selected: false,
-          css: nonSelectedCSS,
-        });
-      }
-    }
-  };
+  const [selectedIndex, setSelectedIndex] = useState(1);
 
   return (
     <div>
@@ -69,16 +21,22 @@ const HomePage = () => {
             <div className='my-6 text-5xl'>Chat</div>
           </Link>
         </div>
+
         <div className='container max-w-6xl pt-10 mx-auto font-Prompt'>
-          <ul className='flex flex-row'>
-            <li id='registration' onClick={clickHandler} className={regTab.css}>
-              REGISTRATION
-            </li>
-            <li id='login' onClick={clickHandler} className={loginTab.css}>
-              LOGIN
-            </li>
-          </ul>
-          <div>{render}</div>
+          <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+            <Tab.List className='flex flex-row'>
+              <Tab className='inline-block w-2/4 px-4 py-4 mr-2 text-lg font-medium text-center text-white rounded-md cursor-pointer bg-slate-800 ui-selected:border ui-selected:border-white ui-selected:text-blue-500 ui-selected:shadow ui-selected:shadow-slate-400 focus:outline-none'>
+                REGISTRATION
+              </Tab>
+              <Tab className='inline-block w-2/4 px-4 py-4 mr-2 text-lg font-medium text-center text-white rounded-md cursor-pointer bg-slate-800 ui-selected:border ui-selected:border-white ui-selected:text-blue-500 ui-selected:shadow ui-selected:shadow-slate-400 focus:outline-none'>
+                LOGIN
+              </Tab>
+            </Tab.List>
+            <Tab.Panels>
+              <Tab.Panel>{Registration(useState)}</Tab.Panel>
+              <Tab.Panel>{Login(useState)}</Tab.Panel>
+            </Tab.Panels>
+          </Tab.Group>
         </div>
       </div>
     </div>
