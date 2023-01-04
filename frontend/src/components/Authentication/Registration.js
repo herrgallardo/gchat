@@ -15,8 +15,6 @@ const Registration = (useState) => {
 
   const postDetails = (avatar) => {};
 
-  console.log('name', username);
-
   return (
     <div className='container max-w-3xl p-10 mx-auto'>
       <div className='container text-white'>
@@ -30,7 +28,7 @@ const Registration = (useState) => {
                 <input
                   type='text'
                   name='name'
-                  className='block w-full pt-1 pb-1 pl-2 mt-1 border border-transparent rounded text-slate-900 focus:bg-blue-200 focus:outline-none'
+                  className='block w-full pt-1 pb-1 pl-2 mt-1 border border-transparent rounded shadow shadow-slate-400 text-slate-900 focus:bg-blue-200 focus:outline-none'
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
@@ -66,16 +64,16 @@ const Registration = (useState) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div class='absolute top-10 right-3 flex items-center pl-3'>
+              <div className='absolute flex items-center pl-3 top-10 right-3'>
                 {showPassword ? (
                   <EyeIcon
                     onClick={clickHandler}
-                    class='w-5 h-5 text-blue-800 cursor-pointer'
+                    className='w-5 h-5 text-blue-800 cursor-pointer'
                   ></EyeIcon>
                 ) : (
                   <EyeSlashIcon
                     onClick={clickHandler}
-                    class='w-5 h-5 text-blue-800 cursor-pointer'
+                    className='w-5 h-5 text-blue-800 cursor-pointer'
                   ></EyeSlashIcon>
                 )}
               </div>
@@ -85,7 +83,7 @@ const Registration = (useState) => {
                 htmlFor='password_confirmation'
                 className='block text-lg text-white undefined'
               >
-                Confirm Password
+                Confirm password
               </label>
               <div>
                 <input
@@ -95,16 +93,16 @@ const Registration = (useState) => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
-              <div class='absolute top-10 right-3 flex items-center pl-3'>
+              <div className='absolute flex items-center pl-3 top-10 right-3'>
                 {showPassword ? (
                   <EyeIcon
                     onClick={clickHandler}
-                    class='w-5 h-5 text-blue-800 cursor-pointer'
+                    className='w-5 h-5 text-blue-800 cursor-pointer'
                   ></EyeIcon>
                 ) : (
                   <EyeSlashIcon
                     onClick={clickHandler}
-                    class='w-5 h-5 text-blue-800 cursor-pointer'
+                    className='w-5 h-5 text-blue-800 cursor-pointer'
                   ></EyeSlashIcon>
                 )}
               </div>
@@ -121,7 +119,7 @@ const Registration = (useState) => {
                   type='file'
                   accept='image/*'
                   name='avatar_upload'
-                  className='block w-full pt-1 pb-1 mt-1 text-white cursor-pointer bg-slate-900 focus:outline-none file:rounded file:bg-blue-900 file:text-white file:hover:bg-blue-700 file:font-Prompt file:p-2 file:mr-5'
+                  className='block w-full pt-1 pb-1 mt-1 text-white cursor-pointer bg-slate-900 focus:outline-none file:rounded file:bg-blue-900 file:text-white file:hover:bg-blue-700 file:font-Prompt file:p-2 file:mr-5 file:shadow file:shadow-slate-400'
                   onChange={(e) => postDetails(e.target.files[0])}
                 />
               </div>

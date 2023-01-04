@@ -46,16 +46,16 @@ const Login = (useState) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div class='absolute top-10 right-3 flex items-center pl-3'>
+              <div className='absolute flex items-center pl-3 top-10 right-3'>
                 {showPassword ? (
                   <EyeIcon
                     onClick={clickHandler}
-                    class='w-5 h-5 text-blue-800 cursor-pointer'
+                    className='w-5 h-5 text-blue-800 cursor-pointer'
                   ></EyeIcon>
                 ) : (
                   <EyeSlashIcon
                     onClick={clickHandler}
-                    class='w-5 h-5 text-blue-800 cursor-pointer'
+                    className='w-5 h-5 text-blue-800 cursor-pointer'
                   ></EyeSlashIcon>
                 )}
               </div>
