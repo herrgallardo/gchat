@@ -7,6 +7,11 @@ const Registration = (useState) => {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [avatar, setAvatar] = useState();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const clickHandler = () => {
+    setShowPassword(!showPassword);
+  };
 
   const postDetails = (avatar) => {};
 
@@ -21,7 +26,7 @@ const Registration = (useState) => {
               <label htmlFor='name' className='block text-lg text-white'>
                 Name
               </label>
-              <div className='container'>
+              <div>
                 <input
                   type='text'
                   name='name'
@@ -37,7 +42,7 @@ const Registration = (useState) => {
               >
                 Email
               </label>
-              <div className='container'>
+              <div>
                 <input
                   type='email'
                   name='email'
@@ -46,36 +51,62 @@ const Registration = (useState) => {
                 />
               </div>
             </div>
-            <div className='mt-4'>
+            <div className='relative mt-4'>
               <label
                 htmlFor='password'
                 className='block text-lg text-white undefined'
               >
                 Password
               </label>
-              <div className='container'>
+              <div>
                 <input
-                  type='password'
+                  type={showPassword ? 'text' : 'password'}
                   name='password'
                   className='w-full pt-1 pb-1 pl-2 mt-1 border border-transparent rounded shadow shadow-slate-400 text-slate-900 focus:bg-blue-200 focus:outline-none'
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
+              <div class='absolute top-10 right-3 flex items-center pl-3'>
+                {showPassword ? (
+                  <EyeIcon
+                    onClick={clickHandler}
+                    class='w-5 h-5 text-blue-800 cursor-pointer'
+                  ></EyeIcon>
+                ) : (
+                  <EyeSlashIcon
+                    onClick={clickHandler}
+                    class='w-5 h-5 text-blue-800 cursor-pointer'
+                  ></EyeSlashIcon>
+                )}
+              </div>
             </div>
-            <div className='mt-4'>
+            <div className='relative mt-4'>
               <label
                 htmlFor='password_confirmation'
                 className='block text-lg text-white undefined'
               >
                 Confirm Password
               </label>
-              <div className='container'>
+              <div>
                 <input
-                  type='password'
+                  type={showPassword ? 'text' : 'password'}
                   name='password_confirmation'
                   className='block w-full pt-1 pb-1 pl-2 mt-1 border border-transparent rounded shadow shadow-slate-400 text-slate-900 focus:bg-blue-200 focus:outline-none'
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
+              </div>
+              <div class='absolute top-10 right-3 flex items-center pl-3'>
+                {showPassword ? (
+                  <EyeIcon
+                    onClick={clickHandler}
+                    class='w-5 h-5 text-blue-800 cursor-pointer'
+                  ></EyeIcon>
+                ) : (
+                  <EyeSlashIcon
+                    onClick={clickHandler}
+                    class='w-5 h-5 text-blue-800 cursor-pointer'
+                  ></EyeSlashIcon>
+                )}
               </div>
             </div>
             <div className='mt-4'>
@@ -85,12 +116,12 @@ const Registration = (useState) => {
               >
                 Choose your avatar
               </label>
-              <div className='container'>
+              <div>
                 <input
                   type='file'
                   accept='image/*'
                   name='avatar_upload'
-                  className='block w-full pt-1 pb-1 pl-2 mt-1 bg-white rounded shadow cursor-pointer text-slate-900 focus:outline-none shadow-slate-400 file:rounded file:bg-blue-900 file:text-white file:hover:bg-blue-700 file:font-Prompt'
+                  className='block w-full pt-1 pb-1 mt-1 text-white cursor-pointer bg-slate-900 focus:outline-none file:rounded file:bg-blue-900 file:text-white file:hover:bg-blue-700 file:font-Prompt file:p-2 file:mr-5'
                   onChange={(e) => postDetails(e.target.files[0])}
                 />
               </div>
