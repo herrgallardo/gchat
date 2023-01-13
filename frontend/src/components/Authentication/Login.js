@@ -1,20 +1,71 @@
 import { EyeIcon } from '@heroicons/react/20/solid';
 import { EyeSlashIcon } from '@heroicons/react/20/solid';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import EmptyFieldsModal from '../modals/EmptyFieldsModal';
+import LoginSuccessModal from '../modals/LoginSuccessModal';
+import LoginErrorModal from '../modals/LoginErrorModal';
 
 const Login = (useState) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
+  const [loading, setLoading] = useState(false);
+  const [emptyFieldsModalIsOpen, setEmptyFieldsModalIsOpen] = useState(false);
+  const [successModalIsOpen, setSuccessModalIsOpen] = useState(false);
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const history = useHistory();
   const [showPassword, setShowPassword] = useState(false);
+
   const clickHandler = () => {
     setShowPassword(!showPassword);
   };
 
+  const submitHandler = async () => {
+    setLoading(true);
+    if (!email || !password) {
+      setEmptyFieldsModalIsOpen(true);
+      setTimeout(() => {
+        setEmptyFieldsModalIsOpen(false);
+      }, 3000);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const config = {
+        headers: {
+          'Content-type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.post(
+        '/api/user/login',
+        { email, password },
+        config
+      );
+
+      setSuccessModalIsOpen(true);
+      localStorage.setItem('userInfo', JSON.stringify(data));
+      setLoading(false);
+
+      setTimeout(() => {
+        setSuccessModalIsOpen(false);
+        history.push('/chats');
+      }, 1000);
+    } catch (error) {
+      setErrorModalIsOpen(true);
+      setTimeout(() => {
+        setErrorModalIsOpen(false);
+      }, 1000);
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className='container max-w-3xl p-10 mx-auto'>
+    <div className='container max-w-3xl p-8 mx-auto'>
       <div className='container text-white'>
         <div className='w-full'>
-          <form>
+          <div>
             <div className='mt-4'>
               <label
                 htmlFor='email'
@@ -59,17 +110,30 @@ const Login = (useState) => {
                   ></EyeSlashIcon>
                 )}
               </div>
+              <div>
+                {emptyFieldsModalIsOpen
+                  ? EmptyFieldsModal(setEmptyFieldsModalIsOpen)
+                  : null}
+              </div>
+              <div>
+                {successModalIsOpen ? (
+                  <LoginSuccessModal></LoginSuccessModal>
+                ) : null}
+              </div>
+              <div>
+                {errorModalIsOpen ? LoginErrorModal(setErrorModalIsOpen) : null}
+              </div>
             </div>
-
             <div className='flex items-center justify-end mt-6'>
               <button
+                onClick={submitHandler}
                 type='submit'
                 className='inline-flex items-center px-4 py-2 ml-4 mr-1 text-lg font-medium tracking-widest text-white uppercase transition duration-150 ease-in-out bg-blue-900 border border-white rounded shadow shadow-slate-400 hover:bg-blue-700 active:bg-blue-500 false'
               >
                 LOGIN
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

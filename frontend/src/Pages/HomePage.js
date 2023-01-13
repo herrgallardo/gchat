@@ -4,6 +4,7 @@ import { Tab } from '@headlessui/react';
 
 import Registration from '../components/authentication/Registration';
 import Login from '../components/authentication/Login';
+import Logo from '../components/layout/Logo';
 
 const HomePage = () => {
   const [selectedIndex, setSelectedIndex] = useState(1);
@@ -11,17 +12,7 @@ const HomePage = () => {
   return (
     <div>
       <div className='container pt-20 pl-3 pr-3 mx-auto'>
-        <div className='container box-border max-w-xs mx-auto border-2 border-white rounded-md shadow-lg shadow-slate-400/75'>
-          <Link
-            to='/'
-            className='flex flex-row justify-center text-center text-white bg-blue-800 rounded-md font-Lucky'
-          >
-            <div className='my-6 text-5xl'>G</div>
-            <div className='my-6 text-5xl animate-pulse'>_</div>
-            <div className='my-6 text-5xl'>Chat</div>
-          </Link>
-        </div>
-
+        <Logo></Logo>
         <div className='container max-w-6xl pt-10 mx-auto font-Prompt'>
           <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
             <Tab.List className='flex flex-row'>

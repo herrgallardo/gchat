@@ -11,8 +11,6 @@ connectDB();
 const app = express();
 app.use(express.json());
 
-connectDB();
-
 app.get('/', (req, res) => {
   res.send('API is working');
 });
