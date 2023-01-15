@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Tab } from '@headlessui/react';
 
-import Registration from '../components/authentication/Registration';
-import Login from '../components/authentication/Login';
+import Registration from '../components/Authentication/Registration';
+import Login from '../components/Authentication/Login';
 import Logo from '../components/layout/Logo';
 
 const HomePage = () => {
