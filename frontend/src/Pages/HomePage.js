@@ -1,13 +1,23 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Tab } from '@headlessui/react';
 
 import Registration from '../components/authentication/Registration';
 import Login from '../components/authentication/Login';
 import Logo from '../components/layout/Logo';
+import { useHistory } from 'react-router-dom';
 
 const HomePage = () => {
   const [selectedIndex, setSelectedIndex] = useState(1);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('userInfo'));
+
+    if (user) {
+      history.push('/chats');
+    }
+  }, [history]);
 
   return (
     <div>
