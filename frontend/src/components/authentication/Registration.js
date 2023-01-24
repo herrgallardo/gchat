@@ -3,6 +3,7 @@ import { EyeSlashIcon } from '@heroicons/react/20/solid';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import Loading from '../functionality/Loading';
 
 const Registration = (useState) => {
   const [username, setUsername] = useState();
@@ -140,6 +141,7 @@ const Registration = (useState) => {
                 </label>
                 <div>
                   <input
+                    autoComplete='new-password'
                     type={showPassword ? 'text' : 'password'}
                     name='password'
                     className='w-full pt-1 pb-1 pl-2 mt-1 border border-transparent rounded shadow shadow-slate-400 text-slate-900 focus:bg-blue-200 focus:outline-none'
@@ -191,18 +193,7 @@ const Registration = (useState) => {
                 </div>
               </div>
               <div className='mt-4'>
-                <div>
-                  {loading ? (
-                    <div className='absolute transform translate-x-1/2 translate-y-1/2 right-1/2 bottom-1/2 '>
-                      <div className='w-64 h-64 border-8 border-blue-400 border-solid rounded-full border-t-transparent animate-spin'></div>
-                      <div className='absolute transform translate-x-1/2 translate-y-1/2 right-1/2 bottom-1/2 '>
-                        <div className='p-4 text-2xl text-blue-400 animate-pulse'>
-                          Loading...
-                        </div>
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
+                <div>{loading ? Loading(loading) : null}</div>
                 <label
                   htmlFor='avatar_upload'
                   className='block text-lg undefined'

@@ -1,19 +1,19 @@
-import ChatBox from '../components/chats/ChatBox';
-import TopBar from '../components/chats/TopBar';
-import { useState } from 'react';
-import UserChats from '../components/chats/UserChats';
 import { ChatState } from '../context/ChatProvider';
+import { Box } from '@chakra-ui/layout';
+import SideDrawer from '../components/chats/SideDrawer';
+import UserChats from '../components/chats/UserChats';
+import ChatBox from '../components/chats/ChatBox';
 
 const ChatPage = () => {
   const { user } = ChatState();
 
   return (
-    <div className='w-full pt-4 font-Prompt'>
-      <div className='text-white'>{user && <TopBar></TopBar>}</div>
-      <div className='flex text-white justify-evenly'>
+    <div className='w-full text-white'>
+      {user && <SideDrawer></SideDrawer>}
+      <Box className='flex justify-between w-full p-10 h-91.5v'>
         {user && <UserChats></UserChats>}
         {user && <ChatBox></ChatBox>}
-      </div>
+      </Box>
     </div>
   );
 };

@@ -1,40 +1,72 @@
-const ProfileModal = (setProfileModalIsOpen, user) => {
-  return (
-    <div>
-      <div className='flex items-center justify-center h-60'></div>
+import { ViewIcon } from '@chakra-ui/icons';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  useDisclosure,
+  IconButton,
+  Text,
+  Image,
+} from '@chakra-ui/react';
 
-      <div className='fixed inset-0 z-10 overflow-y-auto'>
-        <div className='flex items-center min-h-screen px-4 py-8'>
-          <div className='relative w-full max-w-lg p-4 mx-auto border-4 border-blue-700 rounded-lg shadow shadow-lg shadow-slate-400 bg-slate-800'>
-            <div className='m-4 sm:flex'>
-              <div className='flex items-center justify-center flex-none w-32 h-32 mx-auto'>
-                <img
-                  className='rounded-full w-50 h-50'
-                  src={user.avatar}
-                  alt='user_avatar'
-                ></img>
-              </div>
-              <div className='text-center sm:ml-4 sm:text-left'>
-                <h4 className='text-lg font-medium text-white'>
-                  {user.username}
-                </h4>
-                <p className='mt-2 text-[15px] leading-relaxed text-white'>
-                  {user.email}
-                </p>
-                <div className='items-center gap-2 mt-3 sm:flex'>
-                  <button
-                    onClick={() => setProfileModalIsOpen(false)}
-                    className='w-full mt-2 p-2.5 flex-1 text-white rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2'
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+const ProfileModal = ({ user, children }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      {children ? (
+        <span onClick={onOpen}>{children}</span>
+      ) : (
+        <IconButton d={{ base: 'flex' }} icon={<ViewIcon />} onClick={onOpen} />
+      )}
+      <Modal size='lg' onClose={onClose} isOpen={isOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent className='h-96'>
+          <ModalHeader
+            className='text-white bg-blue-800 rounded-t'
+            fontSize='40px'
+            fontFamily='Prompt'
+            d='flex'
+            justifyContent='center'
+          >
+            {user.username}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody
+            d='flex'
+            flexDir='column'
+            alignItems='center'
+            justifyContent='space-between'
+          >
+            <Image
+              borderRadius='full'
+              boxSize='150px'
+              src={user.avatar}
+              alt={user.username}
+            />
+            <Text fontSize={{ base: '28px', md: '30px' }} fontFamily='Prompt'>
+              {user.email}
+            </Text>
+          </ModalBody>
+          <ModalFooter className='shadow-lg shadow-slate-400/75'>
+            <Button
+              bg='blue.600'
+              _hover={{ bg: 'blue.800', color: ' white' }}
+              color='white'
+              fontFamily='Prompt'
+              onClick={onClose}
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import { EyeSlashIcon } from '@heroicons/react/20/solid';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useHistory } from 'react-router-dom';
+import Loading from '../functionality/Loading';
 
 const Login = (useState) => {
   const [email, setEmail] = useState();
@@ -52,6 +53,7 @@ const Login = (useState) => {
   return (
     <div>
       <Toaster position='bottom-center'></Toaster>
+      <div>{loading ? Loading(loading) : null}</div>
       <div className='container max-w-3xl p-8 mx-auto'>
         <div className='container text-white'>
           <div className='w-full'>
