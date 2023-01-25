@@ -37,7 +37,9 @@ const Login = (useState) => {
         config
       );
 
-      toast.success('Login successfull!');
+      toast.success('Login successfull', {
+        position: 'bottom-center',
+      });
       localStorage.setItem('userInfo', JSON.stringify(data));
       setLoading(false);
 
@@ -52,7 +54,7 @@ const Login = (useState) => {
 
   return (
     <div>
-      <Toaster position='bottom-center'></Toaster>
+      <Toaster></Toaster>
       <div>{loading ? Loading(loading) : null}</div>
       <div className='container max-w-3xl p-8 mx-auto'>
         <div className='container text-white'>

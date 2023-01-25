@@ -55,7 +55,7 @@ const ProfileModal = ({ user, children }) => {
           </ModalBody>
           <ModalFooter className='shadow-lg shadow-slate-400/75'>
             <Button
-              bg='blue.600'
+              bg='blue.700'
               _hover={{ bg: 'blue.800', color: ' white' }}
               color='white'
               fontFamily='Prompt'

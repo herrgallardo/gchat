@@ -8,7 +8,7 @@ const ChatPage = () => {
   const { user } = ChatState();
 
   return (
-    <div className='w-full text-white'>
+    <div className='w-full font-Prompt'>
       {user && <SideDrawer></SideDrawer>}
       <Box className='flex justify-between w-full p-10 h-91.5v'>
         {user && <UserChats></UserChats>}
