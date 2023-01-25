@@ -103,16 +103,15 @@ const GroupChatModal = ({ children }) => {
       <span onClick={onOpen}>{children}</span>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent className='border border-white' color='white'>
+        <ModalContent className='text-white border border-white'>
           <ModalHeader
             className='flex justify-center text-white rounded-t bg-slate-900'
             fontSize='35px'
             fontFamily='Prompt'
-            fontWeight='medium'
           >
             Create chat room
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton className='text-white' />
           <ModalBody className='flex flex-col items-center font-Prompt bg-slate-900'>
             <FormControl>
               <Input

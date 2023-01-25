@@ -8,7 +8,7 @@ import ChatLoading from '../functionality/ChatLoading';
 import { getSender } from '../../config/ChatLogics';
 import GroupChatModal from '../modals/GroupChatModal';
 
-const UserChats = () => {
+const UserChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
 
@@ -32,14 +32,13 @@ const UserChats = () => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem('userInfo')));
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <Box
-      className='shadow-lg shadow-slate-400/75'
-      d={{ base: selectedChat ? 'none' : 'flex', md: 'flex' }}
-      flexDir='column'
-      alignItems='center'
+      className={`flex flex-col items-center shadow-lg md:flex shadow-slate-400/75 ${
+        selectedChat ? 'hidden' : 'flex'
+      }`}
       p={3}
       bg='slategray-800'
       w={{ base: '100%', md: '31%' }}
@@ -50,14 +49,7 @@ const UserChats = () => {
       <Toaster></Toaster>
 
       <Box
-        className='flex flex-wrap justify-between font-Prompt'
-        pb={3}
-        px={3}
-        fontSize={{ base: '28px', md: '30px' }}
-        fontFamily='Prompt'
-        fontWeight='normal'
-        d='flex'
-        w='100%'
+        className='flex text-[28px] pb-3 px-3 md:text-[30px] flex-wrap justify-between w-full font-Prompt'
         alignItems='center'
         color='white'
       >
