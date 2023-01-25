@@ -5,6 +5,7 @@ import Registration from '../components/authentication/Registration';
 import Login from '../components/authentication/Login';
 import Logo from '../components/layout/Logo';
 import { useHistory } from 'react-router-dom';
+import { Box } from '@chakra-ui/react';
 
 const HomePage = () => {
   const [selectedIndex, setSelectedIndex] = useState(1);
@@ -21,8 +22,12 @@ const HomePage = () => {
 
   return (
     <div>
-      <div className='container pt-20 pl-3 pr-3 mx-auto'>
-        <Logo></Logo>
+      <div className='container pt-4 pl-3 pr-3 mx-auto'>
+        <Box className='flex place-content-center w-full pb-1.5 pl-2.5 pr-2.5'>
+          <div>
+            <Logo></Logo>
+          </div>
+        </Box>
         <div className='container max-w-6xl pt-10 mx-auto font-Prompt'>
           <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
             <Tab.List className='flex flex-row'>

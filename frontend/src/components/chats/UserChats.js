@@ -6,6 +6,7 @@ import { Box, Button, Stack, Text } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import ChatLoading from '../functionality/ChatLoading';
 import { getSender } from '../../config/ChatLogics';
+import GroupChatModal from '../modals/GroupChatModal';
 
 const UserChats = () => {
   const [loggedUser, setLoggedUser] = useState();
@@ -49,7 +50,7 @@ const UserChats = () => {
       <Toaster></Toaster>
 
       <Box
-        className='flex justify-between font-Prompt'
+        className='flex flex-wrap justify-between font-Prompt'
         pb={3}
         px={3}
         fontSize={{ base: '28px', md: '30px' }}
@@ -60,20 +61,22 @@ const UserChats = () => {
         alignItems='center'
         color='white'
       >
-        Your chats
-        <Button
-          className='shadow-lg shadow-slate-400/75'
-          background='#1E40AF'
-          d='flex'
-          fontSize={{ base: '17px', md: '10px', lg: '17px' }}
-          fontWeight='normal'
-          _hover={{
-            bg: 'blue.900',
-          }}
-          rightIcon={<AddIcon />}
-        >
-          New Group Chat
-        </Button>
+        <Text className=''>Your chats</Text>
+        <GroupChatModal>
+          <Button
+            className='shadow-lg shadow-slate-400/75'
+            background='#1E40AF'
+            d='flex'
+            fontSize={{ base: '17px', md: '10px', lg: '17px' }}
+            fontWeight='normal'
+            _hover={{
+              bg: 'blue.900',
+            }}
+            rightIcon={<AddIcon />}
+          >
+            New chat room
+          </Button>
+        </GroupChatModal>
       </Box>
 
       <Box

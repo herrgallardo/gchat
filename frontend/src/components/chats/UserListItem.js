@@ -7,7 +7,7 @@ const UserListItem = ({ user, handleFunction }) => {
       className='font-Prompt'
       onClick={handleFunction}
       cursor='pointer'
-      bg='#E8E8E8'
+      bg='#7794EA'
       _hover={{
         background: '#1E40AF',
         color: 'white',
