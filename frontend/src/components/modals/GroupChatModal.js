@@ -99,9 +99,9 @@ const GroupChatModal = ({ children }) => {
 
   return (
     <>
-      <Toaster></Toaster>
       <span onClick={onOpen}>{children}</span>
       <Modal isOpen={isOpen} onClose={onClose}>
+        <Toaster></Toaster>
         <ModalOverlay />
         <ModalContent className='text-white border border-white'>
           <ModalHeader

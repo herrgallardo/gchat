@@ -1,14 +1,90 @@
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { Box, IconButton, Text } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  IconButton,
+  Input,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { getSender, getSenderFull } from '../../config/ChatLogics';
 import { ChatState } from '../../context/ChatProvider';
 import ProfileModal from '../modals/ProfileModal';
 import UpdateGroupChatModal from '../modals/UpdateGroupChatModal';
+import ScrollChat from './ScrollChat';
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [newMessage, setNewMessage] = useState();
+
   const { user, selectedChat, setSelectedChat } = ChatState();
+
+  const fetchMessages = async () => {
+    if (!selectedChat) {
+      return;
+    }
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      setLoading(true);
+
+      const { data } = await axios.get(
+        `/api/message/${selectedChat._id}`,
+        config
+      );
+
+      setMessages(data);
+      setLoading(false);
+    } catch (error) {
+      toast.error('Failed to load the messages');
+    }
+  };
+
+  useEffect(() => {
+    fetchMessages();
+  }, [selectedChat]);
+
+  const sendMessage = async (event) => {
+    if (event.key === 'Enter' && newMessage) {
+      try {
+        const config = {
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+
+        setNewMessage('');
+        const { data } = await axios.post(
+          '/api/message',
+          {
+            content: newMessage,
+            chatId: selectedChat._id,
+          },
+          config
+        );
+        setMessages([...messages, data]);
+      } catch (error) {
+        toast.error('Failed to send the message');
+      }
+    }
+  };
+
+  const typingHandler = (e) => {
+    setNewMessage(e.target.value);
+  };
+
   return (
     <>
+      <Toaster></Toaster>
       {selectedChat ? (
         <>
           <Text className='flex text-[20px] md:text-[30px] pb-3 px-2 w-full font-Prompt items-center justify-between'>
@@ -30,11 +106,35 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <UpdateGroupChatModal
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
+                  fetchMessages={fetchMessages}
                 />
               </>
             )}
           </Text>
-          <Box className='flex flex-col justify-end w-full h-full overflow-y-hidden rounded'></Box>
+          <Box className='flex flex-col justify-end w-full h-full overflow-y-hidden rounded'>
+            {loading ? (
+              <Spinner
+                size='xl'
+                w={20}
+                h={20}
+                alignSelf='center'
+                margin='auto'
+              />
+            ) : (
+              <div className='flex flex-col overflow-y-scroll'>
+                <ScrollChat messages={messages} />
+              </div>
+            )}
+            <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+              <Input
+                variant='filled'
+                bg='#E0E0E0'
+                placeholder='Enter a message...'
+                value={newMessage}
+                onChange={typingHandler}
+              />
+            </FormControl>
+          </Box>
         </>
       ) : (
         <Box className='flex items-center justify-center h-full pb-3 font-Prompt'>

@@ -22,7 +22,7 @@ import { ChatState } from '../../context/ChatProvider';
 import UserBadgeItem from '../chats/UserBadgeItem';
 import UserListItem from '../chats/UserListItem';
 
-const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, selectedChat, setSelectedChat } = ChatState();
   const [groupChatName, setGroupChatName] = useState();
@@ -54,7 +54,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
 
       user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
-
+      fetchMessages();
       setLoading(false);
     } catch (error) {
       toast.error('Error remving the user!');
@@ -138,6 +138,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
     if (!query) {
       return;
     }
+
     try {
       setLoading(true);
       const config = {
@@ -150,14 +151,13 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
-      toast.error('Failed to load the search results');
+      toast.error('failed to load the search results');
       setLoading(false);
     }
   };
 
   return (
     <>
-      <Toaster></Toaster>
       <IconButton
         bg='blue.600'
         _hover={{ bg: 'blue.800' }}
@@ -167,6 +167,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       />
 
       <Modal isOpen={isOpen} onClose={onClose}>
+        <Toaster></Toaster>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader
