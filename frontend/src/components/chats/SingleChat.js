@@ -15,6 +15,8 @@ import { ChatState } from '../../context/ChatProvider';
 import ProfileModal from '../modals/ProfileModal';
 import UpdateGroupChatModal from '../modals/UpdateGroupChatModal';
 import ScrollChat from './ScrollChat';
+import Lottie from 'lottie-react';
+import typingAnimation from '../functionality/animations/typingAnimation.json';
 
 import io from 'socket.io-client';
 const ENDPOINT = 'http://localhost:5000';
@@ -25,6 +27,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState();
   const [socketConnected, setSocketConnected] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   const { user, selectedChat, setSelectedChat } = ChatState();
 
@@ -57,7 +61,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit('setup', user);
-    socket.on('connection', () => setSocketConnected(true));
+    socket.on('connected', () => setSocketConnected(true));
+    socket.on('typing', () => setIsTyping(true));
+    socket.on('no typing', () => setIsTyping());
   }, []);
 
   useEffect(() => {
@@ -79,6 +85,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const sendMessage = async (event) => {
     if (event.key === 'Enter' && newMessage) {
+      socket.emit('no typing', selectedChat._id);
       try {
         const config = {
           headers: {
@@ -107,6 +114,30 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
+
+    if (!socketConnected) {
+      return;
+    }
+
+    if (socketConnected) {
+      if (!typing) {
+        setTyping(true);
+        socket.emit('typing', selectedChat._id);
+      }
+    }
+
+    let latestKeyboardStroke = new Date().getTime();
+    let timer = 3000;
+
+    setTimeout(() => {
+      let timeNow = new Date().getTime();
+      let timeOffset = timeNow - latestKeyboardStroke;
+
+      if (timeOffset >= timer && typing) {
+        socket.emit('no typing', selectedChat._id);
+        setTyping(false);
+      }
+    }, timer);
   };
 
   return (
@@ -153,6 +184,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               </div>
             )}
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+              {isTyping ? (
+                <div className='w-20'>
+                  <Lottie animationData={typingAnimation} />
+                </div>
+              ) : null}
               <Input
                 variant='filled'
                 bg='#E0E0E0'
