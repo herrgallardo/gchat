@@ -22,7 +22,7 @@ import io from 'socket.io-client';
 const ENDPOINT = 'http://localhost:5000';
 let socket, selectedChatCompare;
 
-const SingleChat = ({ fetchAgain, setFetchAgain }) => {
+const SingleChat = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState();
@@ -30,7 +30,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
-  const { user, selectedChat, setSelectedChat } = ChatState();
+  const {
+    user,
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
+    fetchAgain,
+    setFetchAgain,
+  } = ChatState();
 
   const fetchMessages = async () => {
     if (!selectedChat) {
@@ -64,11 +72,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on('connected', () => setSocketConnected(true));
     socket.on('typing', () => setIsTyping(true));
     socket.on('no typing', () => setIsTyping());
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     fetchMessages();
     selectedChatCompare = selectedChat;
+    // eslint-disable-next-line
   }, [selectedChat]);
 
   useEffect(() => {
@@ -77,6 +87,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageReceived.chat._id
       ) {
+        if (!notification.includes(newMessageReceived)) {
+          setNotification([newMessageReceived, ...notification]);
+          setFetchAgain(!fetchAgain);
+        }
       } else {
         setMessages([...messages, newMessageReceived]);
       }
@@ -161,11 +175,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             ) : (
               <>
                 {selectedChat.chatName.toUpperCase()}
-                <UpdateGroupChatModal
-                  fetchAgain={fetchAgain}
-                  setFetchAgain={setFetchAgain}
-                  fetchMessages={fetchMessages}
-                />
+                <UpdateGroupChatModal fetchMessages={fetchMessages} />
               </>
             )}
           </Text>

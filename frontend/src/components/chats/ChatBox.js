@@ -1,9 +1,29 @@
 import { Box } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+
 import { ChatState } from '../../context/ChatProvider';
 import SingleChat from './SingleChat';
 
-const ChatBox = ({ fetchAgain, setFetchAgain }) => {
-  const { selectedChat } = ChatState();
+const ChatBox = () => {
+  const { selectedChat, setSelectedChat, chats } = ChatState();
+  const [isGroupMember, setIsGroupMember] = useState(true);
+
+  useEffect(() => {
+    if (!isGroupMember) {
+      setSelectedChat('');
+    }
+  }, [isGroupMember]);
+
+  useEffect(() => {
+    if (selectedChat) {
+      setIsGroupMember(false);
+      for (let chat of chats) {
+        if (chat._id === selectedChat._id) {
+          setIsGroupMember(true);
+        }
+      }
+    }
+  }, [chats]);
 
   return (
     <Box
@@ -19,7 +39,7 @@ const ChatBox = ({ fetchAgain, setFetchAgain }) => {
       borderRadius='lg'
       borderWidth='1px'
     >
-      <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+      <SingleChat />
     </Box>
   );
 };

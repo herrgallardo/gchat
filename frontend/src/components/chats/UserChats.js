@@ -8,9 +8,10 @@ import ChatLoading from '../functionality/ChatLoading';
 import { getSender } from '../../config/ChatLogics';
 import GroupChatModal from '../modals/GroupChatModal';
 
-const UserChats = ({ fetchAgain }) => {
+const UserChats = () => {
   const [loggedUser, setLoggedUser] = useState();
-  const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
+  const { user, selectedChat, setSelectedChat, chats, setChats, fetchAgain } =
+    ChatState();
 
   const fetchChats = async () => {
     try {
@@ -28,6 +29,10 @@ const UserChats = ({ fetchAgain }) => {
       });
     }
   };
+
+  useEffect(() => {
+    fetchChats();
+  }, [chats]);
 
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem('userInfo')));

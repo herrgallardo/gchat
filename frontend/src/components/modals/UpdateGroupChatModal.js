@@ -22,7 +22,7 @@ import { ChatState } from '../../context/ChatProvider';
 import UserBadgeItem from '../chats/UserBadgeItem';
 import UserListItem from '../chats/UserListItem';
 
-const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
+const UpdateGroupChatModal = ({ fetchMessages }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, selectedChat, setSelectedChat } = ChatState();
   const [groupChatName, setGroupChatName] = useState();
@@ -30,6 +30,8 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [renameLoading, setRenameLoading] = useState(false);
+
+  const { fetchAgain, setFetchAgain } = ChatState();
 
   const handleRemove = async (user1) => {
     if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
@@ -57,7 +59,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       fetchMessages();
       setLoading(false);
     } catch (error) {
-      toast.error('Error remving the user!');
+      toast.error('Error removing the user!');
       setLoading(false);
     }
     setGroupChatName('');
