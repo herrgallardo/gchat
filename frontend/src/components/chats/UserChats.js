@@ -9,9 +9,16 @@ import { getSender } from '../../config/ChatLogics';
 import GroupChatModal from '../modals/GroupChatModal';
 
 const UserChats = () => {
-  const [loggedUser, setLoggedUser] = useState();
-  const { user, selectedChat, setSelectedChat, chats, setChats, fetchAgain } =
-    ChatState();
+  const {
+    user,
+    selectedChat,
+    setSelectedChat,
+    chats,
+    setChats,
+    fetchAgain,
+    loggedUser,
+    setLoggedUser,
+  } = ChatState();
 
   const fetchChats = async () => {
     try {

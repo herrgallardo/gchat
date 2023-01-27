@@ -10,11 +10,29 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('Please complete all the required fields');
   }
 
-  const userExists = await User.findOne({ email });
+  const mailExists = await User.findOne({ email });
+  const userExists = await User.findOne({ username });
+
+  const checkPassword = (pwd) => {
+    let re = /^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
+    return re.test(pwd);
+  };
+
+  if (!checkPassword(password)) {
+    res.status(400);
+    throw new Error(
+      'The password must contain at least 8 characters, one upper case and one special character'
+    );
+  }
+
+  if (mailExists) {
+    res.status(400);
+    throw new Error('Email already used');
+  }
 
   if (userExists) {
     res.status(400);
-    throw new Error('User already exists');
+    throw new Error('Username already used');
   }
 
   const user = await User.create({

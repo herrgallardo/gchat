@@ -45,7 +45,7 @@ const Login = (useState) => {
 
       setTimeout(() => {
         history.push('/chats');
-      }, 1000);
+      }, 500);
     } catch (error) {
       toast.error('Login error. Please verify your name and password!');
       setLoading(false);

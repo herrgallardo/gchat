@@ -32,6 +32,19 @@ const Registration = (useState) => {
       return;
     }
 
+    const checkPassword = (pwd) => {
+      let re = /^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
+      return re.test(pwd);
+    };
+
+    if (!checkPassword(password)) {
+      toast.error(
+        'Your password must contain at least 8 characters, one upper case and one special character!'
+      );
+      setLoading(false);
+      return;
+    }
+
     try {
       const config = {
         headers: {
