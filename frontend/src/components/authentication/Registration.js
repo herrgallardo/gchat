@@ -63,7 +63,7 @@ const Registration = (useState) => {
       setLoading(false);
 
       setTimeout(() => {
-        history.push('/chats');
+        history.go('/chats');
       }, 1000);
     } catch (error) {
       toast.error('Registration error!');
