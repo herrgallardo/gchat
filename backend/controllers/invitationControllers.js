@@ -87,8 +87,23 @@ const reject = asyncHandler(async (req, res) => {
   }
 });
 
+const getAll = asyncHandler(async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const invitations = await Invitation.find({ receiverId: userId })
+      .populate('senderId')
+      .populate('receiverId')
+      .populate('chatId');
+    res.json(invitations);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+});
+
 module.exports = {
   invite,
   accept,
   reject,
+  getAll,
 };
