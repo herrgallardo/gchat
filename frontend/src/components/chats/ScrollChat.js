@@ -7,7 +7,9 @@ import {
   isSameUser,
 } from '../../config/ChatLogics';
 import { ChatState } from '../../context/ChatProvider';
-import { profanity } from '@2toad/profanity';
+
+let Filter = require('bad-words');
+let filter = new Filter();
 
 const ScrollChat = ({ messages }) => {
   const { user } = ChatState();
@@ -44,7 +46,7 @@ const ScrollChat = ({ messages }) => {
                 maxWidth: '75%',
               }}
             >
-              {profanity.censor(m.content)}
+              {filter.clean(m.content)}
             </span>
           </div>
         ))}

@@ -5,7 +5,7 @@ import UserChats from '../components/chats/UserChats';
 import ChatBox from '../components/chats/ChatBox';
 
 const ChatPage = () => {
-  const { user, loggedUser } = ChatState();
+  const { user } = ChatState();
 
   return (
     <div className='w-full font-Prompt'>
